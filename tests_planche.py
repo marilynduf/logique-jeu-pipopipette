@@ -315,7 +315,7 @@ class TestAttributsObjet:
             else:
                 return False, self.msg_erreur_attribut(self.nom, nom_fonction_a_tester, self.kwargs,
                                                        self.attributs_attendus, attributs_actuels,
-                                                       '\n\n'.join(msg_erreurs))
+                                                       '\n\n'.join([msg for msg in msg_erreurs if msg is not None]))
 
         except:
             return False, self.msg_erreur_exception(self.nom, nom_fonction_a_tester, self.kwargs)

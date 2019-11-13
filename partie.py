@@ -23,14 +23,14 @@ class PartiePipopipette:
         """
         ÉTAPE 4
 
-        On initialise ici quatre attributs : joueur_rouge,
-        joueur_bleu, joueur_courant et couleur_joueur_courant.
+        On initialise ici quatre attributs : self.joueur_rouge,
+        self.joueur_bleu, self.joueur_courant et self.couleur_joueur_courant.
 
-        Pour créer les objets joueur_rouge et joueur_bleu, faites
-        appel à creer_joueur().
+        Pour créer les attributs self.joueur_rouge et self.joueur_bleu, faites
+        appel à self.creer_joueur().
 
-        joueur_courant est initialisé par défaut au joueur_rouge
-        et couleur_joueur_courant est initialisée à 'rouge'.
+        self.joueur_courant est initialisé par défaut au self.joueur_rouge
+        et self.couleur_joueur_courant est initialisée à 'rouge'.
 
         Pycharm vous sortira probablement des messages d'erreur à
         cette fonction car vous initialisez des attributs en
@@ -80,7 +80,7 @@ class PartiePipopipette:
         JoueurHumain(couleur), par exemple.
 
         Args :
-            type (str): le type de joueur, 'Ordinateur' ou 'Humain'
+            type_joueur (str): le type de joueur, 'Ordinateur' ou 'Humain'
             couleur (str): la couleur du pion joué par le joueur,
                 'rouge' ou 'bleu'.
 
@@ -101,15 +101,15 @@ class PartiePipopipette:
         On commence par faire afficher un message indiquant le début
         de la partie ainsi que l'état de départ de la planche.
 
-        Ensuite on fonctionne comme une boucle. Pour chaque
+        Ensuite on fonctionne avec une boucle. Pour chaque
         itération, on joue un tour et si la partie est terminée,
         on quitte la boucle.
 
         Quand on sort de la boucle principale, on fait afficher le
         message de fin de la partie.
 
-        Utilisez les fonctions partie_terminee(), jouer_tour() et
-        message_fin_partie() pour vous faciliter la tâche.
+        Utilisez les fonctions self.partie_terminee(), self.jouer_tour() et
+        self.message_fin_partie() pour vous faciliter la tâche.
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
@@ -164,11 +164,9 @@ class PartiePipopipette:
         Pour savoir si la planche de jeu est pleine, on peut
         directement faire appel à self.planche.est_pleine(). Si
         la planche est pleine, c'est que la partie est terminée.
-        On fait donc imprimer un message indiquant la fin de la
-        partie ainsi que l'état final de planche.
 
-        Il nous reste maintenant à savoir qui est le gagnant de
-        la partie. Pour obtenir le nombre de boîtes remplies par chacun
+        Il faut alors savoir qui est le gagnant de la partie.
+        Pour obtenir le nombre de boîtes remplies par chacun
         des joueurs, faites appel à la fonction bilan_boites()
         de l'attribut self.planche. On assigne la couleur du
         joueur gagnant (celui avec le plus de boîtes) à l'attribut

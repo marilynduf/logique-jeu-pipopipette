@@ -21,7 +21,7 @@ class Planche:
           boîte du coin en haut à gauche est représentée par le tuple
           (0, 0) alors que celle en bas à droite est représentée par
           le tuple (Planche.N_BOITES_H - 1, Planche.N_BOITES_V - 1).
-          Remarques bien ici les -1: ils sont présents pour la dernière
+          Remarquez bien ici les -1: ils sont présents pour la dernière
           boîte mais pas pour le dernier point car il y a plus de points
           que de boîtes dans une partie de pipopipette.
 
@@ -247,7 +247,8 @@ class Planche:
 
         Cette méthode doit donc:
         - Mettre à jour les attributs couleur_dernier_coup et
-          position_dernier_coup
+          position_dernier_coup en leur assignant les arguments
+          en entrée couleur et index_ligne, respectivement
         - Mettre à jour l'attribut jouee de la ligne située à
           l'index joué
 
@@ -270,7 +271,7 @@ class Planche:
 
         Un coup est invalide (1) si son orientation n'est pas
         'H' ni 'V', (2) s'il n'est pas dans les limites
-        ou (3) s'il est tenté sur une ligne déjà jourée. On
+        ou (3) s'il est tenté sur une ligne déjà jouée. On
         retourne False ainsi qu'un message d'erreur approprié
         selon la raison de l'échec pour un coup invalide.
 
@@ -283,7 +284,7 @@ class Planche:
             return valeur_1, valeur_2
 
         Args :
-            coup (int, int, str): l'index de la ligne jouée
+            index_ligne (int, int, str): l'index de la ligne jouée
 
         Returns :
             bool: True si le coup est valide, False sinon
@@ -292,6 +293,7 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
+        pass
 
     def obtenir_coups_possibles(self):
         """
@@ -300,7 +302,7 @@ class Planche:
         Obtient la liste de tous les coups possibles.
 
         Returns :
-            List[(int, int, str)]: liste de toutes les lignes non jouées de la planche
+            List[(int, int, str)]: liste des index de toutes les lignes non jouées de la planche
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
@@ -355,7 +357,7 @@ class Planche:
         clés de self.boites.
 
         Returns:
-            List[(int, int)]: la liste des index des boîtes touchées par le dernier coup
+            List[(int, int)]: la liste des index des boîtes touchés par le dernier coup
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
@@ -368,8 +370,8 @@ class Planche:
         Méthode qui compte le nombre de lignes qui sont jouées autour de l'index
         d'une boîte.
 
-        On vérifie donc les lignes (1) verticale supérieure, (2) verticale
-        inférieure, (3) horizontale gauche et (4) horizontale droite de la boîte.
+        On vérifie donc les lignes (1) verticale gauche, (2) verticale
+        droite, (3) horizontale supérieure et (4) horizontale inférieure de la boîte.
         Vous devez utiliser l'index de la boîte pour retrouver l'index de chacune
         des quatre lignes à valider.
 
@@ -449,19 +451,19 @@ class Planche:
         """
         ÉTAPE 6
 
-        Retourne une chaîne de caractères correspond à l'état actuel
+        Retourne une chaîne de caractères correspondant à l'état actuel
         de la planche. Cette chaîne contiendra l'information relative
         aux lignes ainsi qu'aux boîtes.
 
         On ajoute d'abord l'information des lignes: pour chaque ligne
         jouée (où l'attribut ligne.jouee est True), on ajoute une entrée
-        ligne,colonne,orientation\n correspondant à l'index de la ligne
+        'ligne,colonne,orientation\n' correspondant à l'index de la ligne
         et un changement de ligne à la chaîne de caractères.
 
         On ajoute ensuite l'information des boîtes: pour chaque boîte
         pleine (où l'attribut boite.pleine est True), on ajoute une
-        entrée ligne,colonne,couleur\n correspondant à l'index de la boîte,
-        sa couleur et un changement de ligne à la chaine de caractères.
+        entrée 'ligne,colonne,couleur\n' correspondant à l'index de la boîte,
+        sa couleur et un changement de ligne à la chaîne de caractères.
 
         Returns:
             str: La chaîne de caractères représentant la planche.
