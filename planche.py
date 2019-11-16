@@ -98,49 +98,23 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
+
         # Créer un dictionnaire vide
         self.lignes = {}
 
         # Ligne horizontale à droite
         for index_ligne_verticale in range(self.N_BOITES_V):
             self.lignes[(index_ligne_verticale, self.N_BOITES_H, 'V')] = Ligne()
-            # affiche {(0, 3, 'V'): Ligne non jouée, (1, 3, 'V'): Ligne non jouée, (2, 3, 'V'): Ligne non jouée}
 
         # Ligne horizontale du bas
         for index_ligne_horizontale in range(self.N_BOITES_H):
             self.lignes[(self.N_BOITES_V, index_ligne_horizontale, 'H')] = Ligne()
-            # affiche {(0, 3, 'H'): Ligne non jouée, (1, 3, 'H'): Ligne non jouée, (2, 3, 'H'): Ligne non jouée}
 
         # lignes de base, boucles imbriquées
         for index_ligne_horizontale in range(self.N_BOITES_H):
             for index_ligne_verticale in range(self.N_BOITES_V):
                 self.lignes[(index_ligne_verticale, index_ligne_horizontale, 'H')] = Ligne()
                 self.lignes[(index_ligne_verticale, index_ligne_horizontale, 'V')] = Ligne()
-
-        print('sdcsdc', Ligne())
-
-
-
-        # affiche
-        # (0, 0, 'H'): Ligne non jouée,
-        # (0, 0, 'V'): Ligne non jouée,
-        # (0, 1, 'H'): Ligne non jouée,
-        # (0, 1, 'V'): Ligne non jouée,
-        # (0, 2, 'H'): Ligne non jouée,
-        # (0, 2, 'V'): Ligne non jouée,
-        # (1, 0, 'H'): Ligne non jouée,
-        # (1, 0, 'V'): Ligne non jouée,
-        # (1, 1, 'H'): Ligne non jouée,
-        # (1, 1, 'V'): Ligne non jouée,
-        # (1, 2, 'H'): Ligne non jouée,
-        # (1, 2, 'V'): Ligne non jouée
-        # (2, 0, 'V'): Ligne non jouée,
-        # (2, 0, 'H'): Ligne non jouée,
-        # (2, 1, 'V'): Ligne non jouée,
-        # (2, 1, 'H'): Ligne non jouée,
-        # (2, 2, 'V'): Ligne non jouée,
-        # (2, 2, 'V'): Ligne non jouée,
-        # }
 
     def initialiser_boites(self):
         """
@@ -176,18 +150,6 @@ class Planche:
         for index_boite_horizontale in range(self.N_BOITES_H):
             for index_boite_verticale in range(self.N_BOITES_V):
                 self.boites[(index_boite_horizontale, index_boite_verticale)] = Boite()
-
-        # affiche {
-        # (0, 0),
-        # (0, 1),
-        # (0, 2),
-        # (1, 0),
-        # (1, 1),
-        # (1, 2),
-        # (2, 0),
-        # (2, 1),
-        # (2, 2)
-        # }
 
     def coup_dans_les_limites(self, index_ligne):
         """
@@ -229,14 +191,11 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        print('ceci est print', self.lignes)
 
-
-        if Ligne() in self.lignes.values():
-            return True
-        else:
-            return False
-
+        for ligne in self.lignes.values():
+            if not ligne.jouee:
+                return False
+        return True
 
     def jouer_coup(self, index_ligne, couleur):
         """
@@ -258,6 +217,16 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
+
+        self.position_dernier_coup = index_ligne
+        self.couleur_dernier_coup = couleur
+
+        # Mettre à jour l'attribut jouee de la ligne située à l'index joué
+        ligne_jouee = Ligne()
+        ligne_jouee.jouee = True
+
+        self.lignes[(self.position_dernier_coup)] = ligne_jouee
+
         pass
 
     def valider_coup(self, index_ligne):
@@ -544,6 +513,27 @@ class Planche:
 
         return planche
 
-ligne = Planche()
+# def check(list1):
+#
+#     # traverse in the list
+#     for x in list1:
+#
+#         # compare with all the values
+#         # with val
+#         if not x:
+#             return False
+#     return False
 
-print('ligne pleine:', ligne.est_pleine())
+
+# def check(list1):
+#     return all(x for x in list1)
+# return False
+# #
+planche1 = Planche()
+# print('planche pleine:', planche.est_pleine())
+test = planche1.est_pleine()
+
+print(planche1.lignes)
+print(planche1.position_dernier_coup)
+
+# result = solver.demo(a, b, c)

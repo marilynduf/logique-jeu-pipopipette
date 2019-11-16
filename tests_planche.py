@@ -674,45 +674,12 @@ def tests_etape_3():
     testeur.test()
 
 
-def groupe_convertir_en_chaine():
-    tests = []
-
-    tests.append(TestSortieObjet(planche_vide, 'test_convertir_chaine_planche_vide', {}, ''))
-
-    chaine_presque_pleine = '0,3,V\n1,3,V\n2,3,V\n3,0,H\n3,1,H\n3,2,H\n0,0,V\n1,0,H\n1,0,V\n2,0,H\n2,0,V\n0,1,H\n0,1,V\n1,1,H\n1,1,V\n2,1,H\n2,1,V\n0,2,H\n0,2,V\n1,2,H\n1,2,V\n2,2,H\n2,2,V\n1,0,bleu\n2,0,rouge\n0,1,bleu\n1,1,rouge\n2,1,bleu\n0,2,rouge\n1,2,bleu\n2,2,rouge\n'
-    tests.append(
-        TestSortieObjet(planche_presque_pleine, 'test_convertir_chaine_planche_presque_pleine', {},
-                        chaine_presque_pleine))
-
-    return GroupeTest('Planche.convertir_en_chaine', tests, 'convertir_en_chaine')
-
-
-def groupe_charger_dune_chaine():
-    tests = []
-
-    tests.append(
-        TestAttributsObjet(planche_vide, 'test_charger_chaine_planche_vide', {'chaine': ''}, vars(planche_vide())))
-
-    chaine_presque_pleine = '0,3,V\n1,3,V\n2,3,V\n3,0,H\n3,1,H\n3,2,H\n0,0,V\n1,0,H\n1,0,V\n2,0,H\n2,0,V\n0,1,H\n0,1,V\n1,1,H\n1,1,V\n2,1,H\n2,1,V\n0,2,H\n0,2,V\n1,2,H\n1,2,V\n2,2,H\n2,2,V\n1,0,bleu\n2,0,rouge\n0,1,bleu\n1,1,rouge\n2,1,bleu\n0,2,rouge\n1,2,bleu\n2,2,rouge\n'
-    tests.append(
-        TestAttributsObjet(planche_vide, 'test_charger_chaine_planche_presque_pleine',
-                           {'chaine': chaine_presque_pleine}, vars(planche_presque_pleine())))
-
-    return GroupeTest('Planche.charger_dune_chaine', tests, 'charger_dune_chaine')
-
-
-def tests_etape_6():
-    print("*******TESTS ÉTAPE 6*******\n")
-    testeur = Testeur(groupe_convertir_en_chaine(), groupe_charger_dune_chaine())
-    testeur.test()
-
-
 def tests_complets():
     print("*******TESTS COMPLETS*******\n")
     testeur = Testeur(groupe_init_boites(), groupe_init_lignes(), groupe_coup_dans_les_limites(), groupe_est_pleine(),
                       groupe_jouer_coup(), groupe_valider_coup(), groupe_obtenir_coups_possible(),
                       groupe_obtenir_idx_boites_a_valider(), groupe_compter_lignes_jouees_boite(),
-                      groupe_bilan_boites(), groupe_convertir_en_chaine(), groupe_charger_dune_chaine())
+                      groupe_bilan_boites())
     testeur.test()
 
 
@@ -723,5 +690,4 @@ if __name__ == "__main__":
     # tests_etape_1()
     tests_etape_2()
     # tests_etape_3()
-    # tests_etape_6()
     # tests_complets()

@@ -29,3 +29,7 @@ class Ligne:
         Nécessaire pour les tests, NE PAS MODIFIER.
         """
         return 'Ligne {}jouée'.format('' if self.jouee else 'non ')
+
+
+# ligne = Ligne()
+# print(ligne.jouee)
