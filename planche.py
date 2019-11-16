@@ -225,7 +225,7 @@ class Planche:
         ligne_jouee = Ligne()
         ligne_jouee.jouee = True
 
-        self.lignes[(self.position_dernier_coup)] = ligne_jouee
+        self.lignes[self.position_dernier_coup] = ligne_jouee
 
         pass
 
