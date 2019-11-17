@@ -262,7 +262,37 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        if self.coup_dans_les_limites(index_ligne):  # condition 1: le coup doit être compris dans les limites
+
+            messages_a_afficher = 'Le coup ne peut pas être jouée:\n'
+            orientation = index_ligne[2]
+
+            if orientation == 'H' or orientation == 'V':  # condition 2 : l'orientation entrée doit être H ou V
+                condition_orientation = True
+            else:
+                condition_orientation = False
+                condition_orientation_message = 'L\'orientation n\'est pas bonne. Vous devez entrez V ou H\n'
+                messages_a_afficher = messages_a_afficher + condition_orientation_message
+
+
+            if not self.lignes[index_ligne].jouee:  # condition 3: la ligne ne doit pas être déjà jouée
+                condition_ligne_jouee = True
+            else:
+                condition_ligne_jouee = False
+                message_ligne_jouee = 'La ligne est déjà jouée.\n'
+                messages_a_afficher = messages_a_afficher + message_ligne_jouee
+
+            if condition_orientation and condition_ligne_jouee:
+                return True, None
+            else:
+                return False, messages_a_afficher
+
+        else:
+            return False, 'Le coup joué est hors limite.'
+
+        # test1 = self.lignes[index_ligne]  # affiche l'objet Ligne() et ses attributs
+        # test2 = self.lignes[index_ligne].jouee  # affche la valeur de l'attribut jouee
 
     def obtenir_coups_possibles(self):
         """
@@ -529,11 +559,7 @@ class Planche:
 #     return all(x for x in list1)
 # return False
 # #
-planche1 = Planche()
-# print('planche pleine:', planche.est_pleine())
-test = planche1.est_pleine()
+# planche1 = Planche()
+# # # print('planche1.lignes', planche1.lignes)
+# print('saDVASDV::', planche1.valider_coup((0, 0, 'Invalide')))
 
-print(planche1.lignes)
-print(planche1.position_dernier_coup)
-
-# result = solver.demo(a, b, c)

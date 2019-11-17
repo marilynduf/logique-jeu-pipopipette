@@ -30,6 +30,3 @@ class Ligne:
         """
         return 'Ligne {}jouée'.format('' if self.jouee else 'non ')
 
-
-# ligne = Ligne()
-# print(ligne.jouee)
