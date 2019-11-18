@@ -688,6 +688,6 @@ if __name__ == "__main__":
     # Commentez et décommentez les tests correspondant à l'étape à laquelle vous êtes rendu
     # pour conserver une sortie claire.
     # tests_etape_1()
-    tests_etape_2()
-    # tests_etape_3()
+    # tests_etape_2()
+    tests_etape_3()
     # tests_complets()

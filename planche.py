@@ -262,6 +262,9 @@ class Planche:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
+        # TODO : On doit retourner un message d'erreur correspondant à la première des raisons pour
+        #  laquelle le coup est invalide, selon l'ordre 1 - 2 - 3 fourni
+
         if self.coup_dans_les_limites(index_ligne):  # condition 1: le coup doit être compris dans les limites
 
             messages_a_afficher = 'Le coup ne peut pas être jouée:\n'
@@ -327,7 +330,14 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+        # obtient l'index des boites à valider
+        boites_a_valider = self.obtenir_idx_boites_a_valider()
+
+        # assigne la bonne couleur au besoin
+        if self.valider_boites(boites_a_valider):
+            return True
+        else:
+            return False
 
     def obtenir_idx_boites_a_valider(self):
         """
@@ -363,7 +373,35 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+        dernier_coup = self.position_dernier_coup
+        ligne = dernier_coup[0]
+        colonne = dernier_coup[1]
+        orientation = dernier_coup[2]
+        boites_touchees = []
+
+        if orientation == 'V':
+            boite_1 = (ligne, colonne)
+            boite_2 = (ligne, colonne - 1)
+            if boite_1 in self.boites:
+                boites_touchees.append(boite_1)
+            if boite_2 in self.boites:
+                boites_touchees.append(boite_2)
+
+        if orientation == 'H':
+            boite_1 = (ligne, colonne)
+            boite_2 = (ligne - 1, colonne)
+            if boite_1 in self.boites:
+                boites_touchees.append(boite_1)
+            if boite_2 in self.boites:
+                boites_touchees.append(boite_2)
+
+        return boites_touchees
+
+
+        # if  in self.boites:
+        #     print(boite)
+        #     print(self.boites[boite])
+        #     print(self.boites)
 
     def compter_lignes_jouees_boite(self, idx_boite):
         """
@@ -530,7 +568,8 @@ class Planche:
             # On rajoute les lignes verticales et la couleur des boîtes
             for idx_colonne in range(Planche.N_BOITES_V):
                 planche += '|' if self.lignes[(idx_ligne, idx_colonne, 'V')].jouee else ' '
-                planche += '{:^3}'.format(self.boites[(idx_ligne, idx_colonne)].couleur_formattee())
+                planche += '{:^3}'.format(
+                    self.boites[(idx_ligne, idx_colonne)].couleur_formattee())
 
             # On rajoute la ligne verticale du bout
             planche += '|' if self.lignes[(idx_ligne, Planche.N_BOITES_V, 'V')].jouee else ' '
@@ -540,10 +579,9 @@ class Planche:
         # On rajoute la ligne horizontale du bas
         for idx_colonne in range(Planche.N_BOITES_V):
             planche += '+'
-            planche += '---' if self.lignes[(Planche.N_BOITES_H, idx_colonne, 'H')].jouee else '   '
+            planche += '---' if self.lignes[
+                (Planche.N_BOITES_H, idx_colonne, 'H')].jouee else '   '
 
         planche += '+{:>2}'.format(Planche.N_BOITES_H) + decalage_nouvelle_ligne
 
         return planche
-
-
