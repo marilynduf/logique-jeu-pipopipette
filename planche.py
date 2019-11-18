@@ -382,26 +382,18 @@ class Planche:
         if orientation == 'V':
             boite_1 = (ligne, colonne)
             boite_2 = (ligne, colonne - 1)
-            if boite_1 in self.boites:
-                boites_touchees.append(boite_1)
-            if boite_2 in self.boites:
-                boites_touchees.append(boite_2)
 
         if orientation == 'H':
             boite_1 = (ligne, colonne)
             boite_2 = (ligne - 1, colonne)
-            if boite_1 in self.boites:
-                boites_touchees.append(boite_1)
-            if boite_2 in self.boites:
-                boites_touchees.append(boite_2)
+
+        if boite_1 in self.boites:
+            boites_touchees.append(boite_1)
+
+        if boite_2 in self.boites:
+            boites_touchees.append(boite_2)
 
         return boites_touchees
-
-
-        # if  in self.boites:
-        #     print(boite)
-        #     print(self.boites[boite])
-        #     print(self.boites)
 
     def compter_lignes_jouees_boite(self, idx_boite):
         """
@@ -415,7 +407,7 @@ class Planche:
         Vous devez utiliser l'index de la boîte pour retrouver l'index de chacune
         des quatre lignes à valider.
 
-        Pour savoir si une ligne est jouée, il suffit de vériier si son attribut
+        Pour savoir si une ligne est jouée, il suffit de vérifier si son attribut
         ligne.jouee est True.
 
         Args:
@@ -426,7 +418,28 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        ligne_boite = idx_boite[0]
+        colonne_boite = idx_boite[1]
+        ligne_v_gauche = (ligne_boite, colonne_boite, 'V')
+        ligne_v_droite = (ligne_boite, colonne_boite + 1, 'V')
+        ligne_h_super = (ligne_boite, colonne_boite, 'H')
+        ligne_h_infer = (ligne_boite + 1, colonne_boite, 'H')
+        lignes_de_la_boite = [ligne_v_gauche, ligne_v_droite, ligne_h_super, ligne_h_infer]
+
+        nb_ligne_jouee = 0
+
+        for ligne in lignes_de_la_boite:
+            ligne = self.lignes[ligne]
+            print(ligne)
+
+            if not ligne.jouee:
+                nb_ligne_jouee = nb_ligne_jouee + 0
+
+            if ligne.jouee:
+                nb_ligne_jouee = nb_ligne_jouee = nb_ligne_jouee + 1
+
+        return nb_ligne_jouee
 
     def valider_boites(self, idx_boites):
         """
