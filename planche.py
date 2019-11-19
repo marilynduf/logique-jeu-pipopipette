@@ -226,7 +226,6 @@ class Planche:
 
         self.lignes[self.position_dernier_coup] = ligne_jouee
 
-        pass
 
     def valider_coup(self, index_ligne):
         """
@@ -431,10 +430,10 @@ class Planche:
 
         for ligne in lignes_de_la_boite:
             ligne = self.lignes[ligne]
-            print(ligne)
 
             if not ligne.jouee:
                 nb_ligne_jouee = nb_ligne_jouee + 0
+                continue
 
             if ligne.jouee:
                 nb_ligne_jouee = nb_ligne_jouee = nb_ligne_jouee + 1
@@ -472,7 +471,25 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        for idx_boite in idx_boites:
+            boite = self.boites[idx_boite]
+            if not boite.pleine:
+                nb_lignes_jouees_boite = self.compter_lignes_jouees_boite(idx_boite)
+                if nb_lignes_jouees_boite == 4:
+                    boite.pleine = Boite().assigner_couleur(self.couleur_dernier_coup)
+                    return True
+                continue
+        return False
+
+
+        #  si boite pleine on ne fait rien
+
+        #  trouver le nombre de lignes jouées dans une boite
+            #  si
+
+
+
 
     def bilan_boites(self):
         """
@@ -498,7 +515,10 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        for boite in self.boites:
+            valeur = self.boites[boite]
+            print(valeur.pleine, valeur.couleur, sep=', ')
 
     def convertir_en_chaine(self):
         """
@@ -581,8 +601,7 @@ class Planche:
             # On rajoute les lignes verticales et la couleur des boîtes
             for idx_colonne in range(Planche.N_BOITES_V):
                 planche += '|' if self.lignes[(idx_ligne, idx_colonne, 'V')].jouee else ' '
-                planche += '{:^3}'.format(
-                    self.boites[(idx_ligne, idx_colonne)].couleur_formattee())
+                planche += '{:^3}'.format(self.boites[(idx_ligne, idx_colonne)].couleur_formattee())
 
             # On rajoute la ligne verticale du bout
             planche += '|' if self.lignes[(idx_ligne, Planche.N_BOITES_V, 'V')].jouee else ' '
@@ -592,9 +611,16 @@ class Planche:
         # On rajoute la ligne horizontale du bas
         for idx_colonne in range(Planche.N_BOITES_V):
             planche += '+'
-            planche += '---' if self.lignes[
-                (Planche.N_BOITES_H, idx_colonne, 'H')].jouee else '   '
+            planche += '---' if self.lignes[(Planche.N_BOITES_H, idx_colonne, 'H')].jouee else '   '
 
         planche += '+{:>2}'.format(Planche.N_BOITES_H) + decalage_nouvelle_ligne
 
         return planche
+
+# debug purpose:
+
+
+if __name__ == '__main__':
+    planche = Planche()
+    idx_boites = [(0, 0), (0, 1)]
+    test = planche.valider_boites(idx_boites)  # La méthode qui vous intéresse
