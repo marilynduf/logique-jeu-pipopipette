@@ -689,5 +689,5 @@ if __name__ == "__main__":
     # pour conserver une sortie claire.
     # tests_etape_1()
     # tests_etape_2()
-    tests_etape_3()
-    # tests_complets()
+    # tests_etape_3()
+    tests_complets()

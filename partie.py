@@ -23,8 +23,11 @@ class PartiePipopipette:
         """
         ÉTAPE 4
 
-        On initialise ici quatre attributs : self.joueur_rouge,
-        self.joueur_bleu, self.joueur_courant et self.couleur_joueur_courant.
+        On initialise ici quatre attributs :
+        self.joueur_rouge,
+        self.joueur_bleu,
+        self.joueur_courant
+        self.couleur_joueur_courant.
 
         Pour créer les attributs self.joueur_rouge et self.joueur_bleu, faites
         appel à self.creer_joueur().
@@ -39,7 +42,13 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+        self.joueur_rouge = self.creer_joueur('rouge')
+        print(self.joueur_rouge)
+        self.joueur_bleu = self.creer_joueur('bleu')
+        print(self.joueur_bleu)
+
+        self.joueur_courant = self.joueur_rouge
+        self.couleur_joueur_courant = 'rouge'
 
     def creer_joueur(self, couleur):
         """
@@ -66,7 +75,15 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        type_joueur = input('Entrez le type de joueur (Humain ou Ordinateur) pour le joueur ' + couleur + ':')
+
+        while type_joueur != 'Humain':
+            type_joueur = input('Entrez le type de joueur (Humain ou Ordinateur)')
+
+        joueur = self.creer_joueur_selon_type(type_joueur, couleur)
+
+        return joueur
 
     def creer_joueur_selon_type(self, type_joueur, couleur):
         """
@@ -90,7 +107,12 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+        if type_joueur == 'Humain':
+            joueur = JoueurHumain(couleur)
+        else:
+            joueur = JoueurOrdinateur(couleur)
+
+        return joueur
 
     def jouer(self):
         """
@@ -246,3 +268,10 @@ class PartiePipopipette:
         TODO: Vous devez compléter le corps de cette fonction.
         """
         pass
+
+# debug purpose:
+
+if __name__ == '__main__':
+    popi = PartiePipopipette()
+
+    test = popi.creer_joueur()  # La méthode qui vous intéresse

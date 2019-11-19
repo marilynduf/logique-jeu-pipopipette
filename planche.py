@@ -99,19 +99,15 @@ class Planche:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        # Créer un dictionnaire vide
         self.lignes = {}
 
-        # Ligne horizontale à droite
-        for index_ligne_verticale in range(self.N_BOITES_V):
+        for index_ligne_verticale in range(self.N_BOITES_V):  # Lignes horizontales à droite
             self.lignes[(index_ligne_verticale, self.N_BOITES_H, 'V')] = Ligne()
 
-        # Ligne horizontale du bas
-        for index_ligne_horizontale in range(self.N_BOITES_H):
+        for index_ligne_horizontale in range(self.N_BOITES_H):  # Lignes horizontales du bas
             self.lignes[(self.N_BOITES_V, index_ligne_horizontale, 'H')] = Ligne()
 
-        # lignes de base, boucles imbriquées
-        for index_ligne_horizontale in range(self.N_BOITES_H):
+        for index_ligne_horizontale in range(self.N_BOITES_H): # lignes de base
             for index_ligne_verticale in range(self.N_BOITES_V):
                 self.lignes[(index_ligne_verticale, index_ligne_horizontale, 'H')] = Ligne()
                 self.lignes[(index_ligne_verticale, index_ligne_horizontale, 'V')] = Ligne()
@@ -614,7 +610,7 @@ class Planche:
         planche += '+{:>2}'.format(Planche.N_BOITES_H) + decalage_nouvelle_ligne
 
         return planche
-#
+
 # # debug purpose:
 #
 # if __name__ == '__main__':
