@@ -507,9 +507,16 @@ class Planche:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
+        nb_boites_bleues = 0
+        nb_boites_rouges = 0
+
         for boite in self.boites:
-            valeur = self.boites[boite]
-            print(valeur.pleine, valeur.couleur, sep=', ')
+            boite = self.boites[boite]
+            if boite.couleur == 'bleu':
+                nb_boites_bleues += 1
+            else:
+                nb_boites_rouges += 1
+        return nb_boites_bleues,  nb_boites_rouges
 
     def convertir_en_chaine(self):
         """
@@ -607,11 +614,10 @@ class Planche:
         planche += '+{:>2}'.format(Planche.N_BOITES_H) + decalage_nouvelle_ligne
 
         return planche
-
-# debug purpose:
-
-
-if __name__ == '__main__':
-    planche = Planche()
-    idx_boites = [(0, 0), (0, 1)]
-    test = planche.valider_boites(idx_boites)  # La méthode qui vous intéresse
+#
+# # debug purpose:
+#
+# if __name__ == '__main__':
+#     planche = Planche()
+#     idx_boites = [(0, 0), (0, 1)]
+#     test = planche.valider_boites(idx_boites)  # La méthode qui vous intéresse
