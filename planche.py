@@ -482,15 +482,6 @@ class Planche:
                 continue
         return False
 
-
-        #  si boite pleine on ne fait rien
-
-        #  trouver le nombre de lignes jouées dans une boite
-            #  si
-
-
-
-
     def bilan_boites(self):
         """
         ÉTAPE 3
