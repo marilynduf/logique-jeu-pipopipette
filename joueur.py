@@ -75,7 +75,11 @@ class JoueurHumain(Joueur):
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+        ligne_choisie = int(input('Entrez la ligne'))
+        colonne_choisie = int(input('Entrez la colonne'))
+        orientation_choisie = input('Entrez l\'orientation')
+
+        return ligne_choisie, colonne_choisie, orientation_choisie
 
 
 class JoueurOrdinateur(Joueur):

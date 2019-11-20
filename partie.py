@@ -43,9 +43,7 @@ class PartiePipopipette:
         TODO: Vous devez compléter le corps de cette fonction.
         """
         self.joueur_rouge = self.creer_joueur('rouge')
-        print(self.joueur_rouge)
         self.joueur_bleu = self.creer_joueur('bleu')
-        print(self.joueur_bleu)
 
         self.joueur_courant = self.joueur_rouge
         self.couleur_joueur_courant = 'rouge'
@@ -76,8 +74,8 @@ class PartiePipopipette:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        type_joueur = input('Entrez le type de joueur (Humain ou Ordinateur) pour le joueur ' + couleur + ':')
-
+        # type_joueur = input('Entrez le type de joueur (Humain ou Ordinateur) pour le joueur ' + couleur + ':')
+        type_joueur = ''
         while type_joueur != 'Humain':
             type_joueur = input('Entrez le type de joueur (Humain ou Ordinateur)')
 
@@ -128,14 +126,21 @@ class PartiePipopipette:
         on quitte la boucle.
 
         Quand on sort de la boucle principale, on fait afficher le
-        message de fin de la partie.
+        message de fin de la partie.()
 
         Utilisez les fonctions self.partie_terminee(), self.jouer_tour() et
         self.message_fin_partie() pour vous faciliter la tâche.
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        message_debut_partie = '\nDébut de la partie'
+        print(message_debut_partie)
+
+        while not self.partie_terminee():
+            self.jouer_tour()
+
+        self.message_fin_partie()
 
     def jouer_tour(self):
         """
@@ -157,7 +162,20 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        print('C\'est au tour du joueur', self.joueur_courant.couleur, sep=' ')  # affiche le joueur qui doit jouer
+        print(self.planche)  # afficher planche
+
+        joueur = self.joueur_courant
+        coup_choisi = joueur.choisir_coup(self.planche)  # return coup choisi
+        coup_verification = self.planche.valider_coup(coup_choisi)  # valide coup choisi
+        coup_valide = coup_verification[0]
+        if coup_valide:
+            self.jouer_coup(coup_choisi)  # applique le coup
+        else:
+            message = coup_verification[1]
+            print(message)
+
 
     def jouer_coup(self, coup):
         """
@@ -175,7 +193,8 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+        couleur = self.joueur_courant.couleur
+        coup_joue = self.planche.jouer_coup(coup, couleur)
 
     def partie_terminee(self):
         """
@@ -269,9 +288,9 @@ class PartiePipopipette:
         """
         pass
 
-# debug purpose:
-
-if __name__ == '__main__':
-    popi = PartiePipopipette()
-
-    test = popi.creer_joueur()  # La méthode qui vous intéresse
+# # debug purpose:
+#
+# if __name__ == '__main__':
+#     popi = PartiePipopipette()
+#
+#     test = popi.jouer_tour()  # La méthode qui vous intéresse

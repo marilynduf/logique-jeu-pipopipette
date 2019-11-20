@@ -165,6 +165,7 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
+
         if index_ligne in self.lignes:
             return True
         else:
@@ -222,7 +223,6 @@ class Planche:
 
         self.lignes[self.position_dernier_coup] = ligne_jouee
 
-
     def valider_coup(self, index_ligne):
         """
         ÉTAPE 2
@@ -257,38 +257,23 @@ class Planche:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        # TODO : On doit retourner un message d'erreur correspondant à la première des raisons pour
-        #  laquelle le coup est invalide, selon l'ordre 1 - 2 - 3 fourni
+        message_erreur_1 = '\nL\'orientation entrées n\'est pas correcte. Vous devez entrez V ou H'
+        message_erreur_2 = '\nLe coup joué est hors limite.'
+        message_erreur_3 = '\nLigne déjà jouée'
 
-        if self.coup_dans_les_limites(index_ligne):  # condition 1: le coup doit être compris dans les limites
+        orientation = index_ligne[2]
 
-            messages_a_afficher = 'Le coup ne peut pas être jouée:\n'
-            orientation = index_ligne[2]
+        if orientation != 'H' and orientation != 'V':  # condition 1 : l'orientation entrée doit être H ou V
+            return False, message_erreur_1
 
-            if orientation == 'H' or orientation == 'V':  # condition 2 : l'orientation entrée doit être H ou V
-                condition_orientation = True
-            else:
-                condition_orientation = False
-                condition_orientation_message = 'L\'orientation n\'est pas bonne. Vous devez entrez V ou H\n'
-                messages_a_afficher = messages_a_afficher + condition_orientation_message
+        if self.coup_dans_les_limites(index_ligne) == False:  # condition 2: le coup doit être compris dans les limites
+            return False, message_erreur_2
 
-            if not self.lignes[index_ligne].jouee:  # condition 3: la ligne ne doit pas être déjà jouée
-                condition_ligne_jouee = True
-            else:
-                condition_ligne_jouee = False
-                message_ligne_jouee = 'La ligne est déjà jouée.\n'
-                messages_a_afficher = messages_a_afficher + message_ligne_jouee
-
-            if condition_orientation and condition_ligne_jouee:
-                return True, None
-            else:
-                return False, messages_a_afficher
+        if self.lignes[index_ligne].jouee:  # condition 1: la ligne ne doit pas être déjà jouée
+            return False, message_erreur_3
 
         else:
-            return False, 'Le coup joué est hors limite.'
-
-        # test1 = self.lignes[index_ligne]  # affiche l'objet Ligne() et ses attributs
-        # test2 = self.lignes[index_ligne].jouee  # affche la valeur de l'attribut jouee
+            return True, None
 
     def obtenir_coups_possibles(self):
         """
