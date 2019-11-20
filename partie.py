@@ -194,7 +194,16 @@ class PartiePipopipette:
         TODO: Vous devez compléter le corps de cette fonction.
         """
         couleur = self.joueur_courant.couleur
-        coup_joue = self.planche.jouer_coup(coup, couleur)
+
+        self.planche.jouer_coup(coup, couleur)
+
+        maj_boite = self.planche.maj_boites()
+        if not maj_boite:
+            print('aucune boite n\'a été remplie')
+            self.changer_joueur()
+        else:
+            self.jouer_tour()
+
 
     def partie_terminee(self):
         """
@@ -229,7 +238,13 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        if self.joueur_courant.couleur == 'rouge':
+            self.joueur_courant = self.joueur_bleu
+            self.couleur_joueur_courant = 'bleu'
+        else:
+            self.joueur_courant = self.joueur_rouge
+            self.couleur_joueur_courant = 'rouge'
 
     def message_fin_partie(self):
         """
