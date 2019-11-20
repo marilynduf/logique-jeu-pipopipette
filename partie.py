@@ -163,7 +163,7 @@ class PartiePipopipette:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        print('C\'est au tour du joueur', self.joueur_courant.couleur, sep=' ')  # affiche le joueur qui doit jouer
+        print('\nC\'est au tour du joueur', self.joueur_courant.couleur, sep=' ')  # affiche le joueur qui doit jouer
         print(self.planche)  # afficher planche
 
         joueur = self.joueur_courant
@@ -227,7 +227,17 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+        planche_pleine = self.planche.est_pleine()
+        if planche_pleine:
+            bilan_boite = self.planche.bilan_boites()
+            nb_boite_bleu = bilan_boite[0]
+            nb_boite_rouge = bilan_boite[1]
+            if nb_boite_bleu > nb_boite_rouge:
+                self.gagnant_partie = self.joueur_bleu
+            else:
+                self.gagnant_partie = self.joueur_rouge
+            return True
+
 
     def changer_joueur(self):
         """
@@ -245,6 +255,7 @@ class PartiePipopipette:
         else:
             self.joueur_courant = self.joueur_rouge
             self.couleur_joueur_courant = 'rouge'
+
 
     def message_fin_partie(self):
         """

@@ -495,7 +495,8 @@ class Planche:
             boite = self.boites[boite]
             if boite.couleur == 'bleu':
                 nb_boites_bleues += 1
-            else:
+                continue
+            if boite.couleur == 'rouge':
                 nb_boites_rouges += 1
         return nb_boites_bleues,  nb_boites_rouges
 
