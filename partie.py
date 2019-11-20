@@ -73,8 +73,6 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-
-        # type_joueur = input('Entrez le type de joueur (Humain ou Ordinateur) pour le joueur ' + couleur + ':')
         type_joueur = ''
         while type_joueur != 'Humain':
             type_joueur = input('Entrez le type de joueur (Humain ou Ordinateur)')
@@ -272,7 +270,9 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+        message_fin_partie = 'Le gagnant est ', self.gagnant_partie, '!'
+
+        return message_fin_partie
 
     def sauvegarder(self, nom_fichier):
         """

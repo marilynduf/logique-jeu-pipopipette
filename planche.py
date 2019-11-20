@@ -523,7 +523,27 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        info_lignes = ''
+        for idx_ligne in self.lignes:  # retourne les infos des lignes jouées
+            if self.lignes[idx_ligne].jouee:
+                ligne = str(idx_ligne[0])
+                colonne = str(idx_ligne[1])
+                orientation = idx_ligne[2]
+                info_lignes += ligne + ',' + colonne + ',' + orientation + '\n'
+
+        info_boites = ''
+        for idx_boite in self.boites:  # retourne les infos des boites pleines
+            if self.boites[idx_boite].pleine:
+                ligne = str(idx_boite[0])
+                colonne = str(idx_boite[1])
+                couleur = self.boites[idx_boite].couleur
+                info_boites += ligne + ',' + colonne + ',' + couleur + '\n'
+
+        info_partie = info_lignes + info_boites
+
+        return info_partie
+
 
     def charger_dune_chaine(self, chaine):
         """
@@ -597,9 +617,9 @@ class Planche:
 
         return planche
 
-# # debug purpose:
-#
+# debug purpose:
+
 # if __name__ == '__main__':
 #     planche = Planche()
 #     idx_boites = [(0, 0), (0, 1)]
-#     test = planche.valider_boites(idx_boites)  # La méthode qui vous intéresse
+#     test = planche.convertir_en_chaine()  # La méthode qui vous intéresse
