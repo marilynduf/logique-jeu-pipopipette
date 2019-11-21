@@ -14,6 +14,6 @@ if __name__ == '__main__':
     # partie = PartiePipopipette('partie_sauvegardee.txt')
 
     # Pour sauvegarder une partie
-    # partie.sauvegarder('partie_sauvegardee.txt')
+    partie.sauvegarder('partie_sauvegardee.txt')
 
     partie.jouer()

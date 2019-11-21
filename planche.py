@@ -257,9 +257,9 @@ class Planche:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        message_erreur_1 = '\nL\'orientation entrées n\'est pas correcte. Vous devez entrez V ou H'
-        message_erreur_2 = '\nLe coup joué est hors limite.'
-        message_erreur_3 = '\nLigne déjà jouée'
+        message_erreur_1 = '\nCoup invalide! L\'orientation entrées n\'est pas correcte. Vous devez entrez V ou H\n'
+        message_erreur_2 = '\nCoup invalide! Le coup joué en dehors des limites de la grille.\n'
+        message_erreur_3 = '\nCoup invalide! Coup dans une ligne déjà jouée\n'
 
         orientation = index_ligne[2]
 
@@ -544,7 +544,6 @@ class Planche:
 
         return info_partie
 
-
     def charger_dune_chaine(self, chaine):
         """
         ÉTAPE 6
@@ -616,10 +615,3 @@ class Planche:
         planche += '+{:>2}'.format(Planche.N_BOITES_H) + decalage_nouvelle_ligne
 
         return planche
-
-# debug purpose:
-
-# if __name__ == '__main__':
-#     planche = Planche()
-#     idx_boites = [(0, 0), (0, 1)]
-#     test = planche.convertir_en_chaine()  # La méthode qui vous intéresse
