@@ -45,7 +45,6 @@ class PartiePipopipette:
 
         self.joueur_rouge = self.creer_joueur('rouge')
         self.joueur_bleu = self.creer_joueur('bleu')
-
         self.joueur_courant = self.joueur_rouge
         self.couleur_joueur_courant = 'rouge'
 
@@ -140,13 +139,12 @@ class PartiePipopipette:
         """
 
         print('\nDébut de la partie!')
+        print(self.planche)
         partie_terminee = False
         while not partie_terminee:
-
             self.jouer_tour()
             partie_terminee = self.partie_terminee()
 
-        print(self.planche)
         print(self.message_fin_partie())
 
     def jouer_tour(self):
@@ -154,8 +152,7 @@ class PartiePipopipette:
         ÉTAPE 5
 
         Cette méthode commence par afficher à quel joueur c'est
-        le tour de jouer et faire imprimer l'état de la planche avec
-        print(self.planche).
+        le tour de jouer.
 
         On va ensuite chercher le coup choisi par le joueur courant
         avec la méthode choisir_coup() de Joueur en lui passant la
@@ -166,12 +163,12 @@ class PartiePipopipette:
         pour plus de détails.
 
         On finit par jouer le coup (validé) avec la méthode self.jouer_coup().
+        et faire imprimer l'état de la planche avec print(self.planche).
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
         print('\nC\'est au tour du joueur', self.joueur_courant.couleur, sep=' ')  # affiche le joueur qui doit jouer
-        print(self.planche)  # afficher planche
 
         joueur = self.joueur_courant
         coup_choisi = joueur.choisir_coup(self.planche)  # return coup choisi
@@ -186,9 +183,8 @@ class PartiePipopipette:
             coup_valide = coup_verification[0]
 
         if coup_valide:
-            coup_possibles = self.planche.obtenir_coups_possibles()
-            print(len(coup_possibles))
-            self.jouer_coup(coup_choisi)  # applique le coup
+            self.jouer_coup(coup_choisi)  # applique le coup sur la planche
+            print(self.planche)
 
     def jouer_coup(self, coup):
         """
@@ -241,9 +237,9 @@ class PartiePipopipette:
             nb_boite_bleu = bilan_boite[0]
             nb_boite_rouge = bilan_boite[1]
             if nb_boite_bleu > nb_boite_rouge:
-                self.gagnant_partie = self.joueur_bleu
+                self.gagnant_partie = self.joueur_bleu.couleur
             else:
-                self.gagnant_partie = self.joueur_rouge
+                self.gagnant_partie = self.joueur_rouge.couleur
 
             return True
 
@@ -279,7 +275,7 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        message_fin_partie = 'Le gagnant de la partie est le joueur ', self.gagnant_partie, '!'
+        message_fin_partie = 'Le gagnant de la partie est le joueur ' + self.gagnant_partie + '!'
 
         return message_fin_partie
 
@@ -311,7 +307,6 @@ class PartiePipopipette:
 
         return nom_fichier,
 
-        x = 1
 
     def charger(self, nom_fichier):
         """
@@ -330,9 +325,3 @@ class PartiePipopipette:
         """
         pass
 
-# # debug purpose:
-#
-# if __name__ == '__main__':
-#     popi = PartiePipopipette()
-#
-#     test = popi.sauvegarder()  # La méthode qui vous intéresse

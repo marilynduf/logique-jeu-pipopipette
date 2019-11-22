@@ -217,11 +217,7 @@ class Planche:
 
         self.position_dernier_coup = index_ligne
         self.couleur_dernier_coup = couleur
-
-        ligne_jouee = Ligne()
-        ligne_jouee.jouee = True  # Met à jour l'attribut jouee de la ligne située à l'index joué
-
-        self.lignes[self.position_dernier_coup] = ligne_jouee
+        self.lignes[self.position_dernier_coup].jouee = True
 
     def valider_coup(self, index_ligne):
         """
@@ -310,11 +306,10 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        # obtient l'index des boites à valider
-        boites_a_valider = self.obtenir_idx_boites_a_valider()
 
-        # assigne la bonne couleur au besoin
-        if self.valider_boites(boites_a_valider):
+        boites_a_valider = self.obtenir_idx_boites_a_valider()  # obtient l'index des boites à valider
+
+        if self.valider_boites(boites_a_valider):  # assigne la bonne couleur au besoin
             return True
         else:
             return False
@@ -452,16 +447,19 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-
+        au_moins_une_boite_remplie = False
         for idx_boite in idx_boites:
             boite = self.boites[idx_boite]
             if not boite.pleine:
                 nb_lignes_jouees_boite = self.compter_lignes_jouees_boite(idx_boite)
                 if nb_lignes_jouees_boite == 4:
-                    boite.pleine = Boite().assigner_couleur(self.couleur_dernier_coup)
-                    return True
-                continue
-        return False
+                    boite.assigner_couleur(self.couleur_dernier_coup)
+                    au_moins_une_boite_remplie = True
+
+        if au_moins_une_boite_remplie:
+            return True
+        else:
+            return False
 
     def bilan_boites(self):
         """
@@ -524,25 +522,26 @@ class Planche:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        info_lignes = ''
+        #  WARNING : voir si format de récolte de données est correct. p-ê plus un tableau
+        chaine_info_lignes = ''
         for idx_ligne in self.lignes:  # retourne les infos des lignes jouées
             if self.lignes[idx_ligne].jouee:
                 ligne = str(idx_ligne[0])
                 colonne = str(idx_ligne[1])
                 orientation = idx_ligne[2]
-                info_lignes += ligne + ',' + colonne + ',' + orientation + '\n'
+                chaine_info_lignes += ligne + ',' + colonne + ',' + orientation + '\n'
 
-        info_boites = ''
+        chaine_info_boites = ''
         for idx_boite in self.boites:  # retourne les infos des boites pleines
             if self.boites[idx_boite].pleine:
                 ligne = str(idx_boite[0])
                 colonne = str(idx_boite[1])
                 couleur = self.boites[idx_boite].couleur
-                info_boites += ligne + ',' + colonne + ',' + couleur + '\n'
+                chaine_info_boites += ligne + ',' + colonne + ',' + couleur + '\n'
 
-        info_partie = info_lignes + info_boites
+        chaine_info_partie = chaine_info_lignes + chaine_info_boites
 
-        return info_partie
+        return chaine_info_partie
 
     def charger_dune_chaine(self, chaine):
         """
@@ -570,7 +569,17 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+        lignes_jouees = chaine.split('\n')
+        for ligne_jouee in lignes_jouees:
+            ligne = int(ligne_jouee[0])
+            colonne = int(ligne_jouee[2])
+            attribut = str(ligne_jouee[4])
+
+            if attribut == 'H' or attribut == 'V':
+                self.lignes[(ligne, colonne, attribut)].jouee = True
+            else:
+                self.boites[(ligne, colonne)].pleine = True
+
 
     def __repr__(self):
         """
@@ -615,3 +624,4 @@ class Planche:
         planche += '+{:>2}'.format(Planche.N_BOITES_H) + decalage_nouvelle_ligne
 
         return planche
+
