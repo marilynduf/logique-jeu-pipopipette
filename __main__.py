@@ -9,15 +9,13 @@ from partie import PartiePipopipette
 from planche import Planche
 
 if __name__ == '__main__':
-    partie = PartiePipopipette()
+    # partie = PartiePipopipette()
 
     # Pour charger d'une partie déjà sauvegardée
-    # partie = PartiePipopipette('partie_en_cours.txt')
+    partie = PartiePipopipette('partie_en_cours.txt')
 
     # Pour sauvegarder une partie
-    partie.sauvegarder('partie_sauvegardee.txt')
-    planche = Planche()
-    chaine = planche.convertir_en_chaine()
-    planche.charger_dune_chaine(chaine)
+    # partie.sauvegarder('partie_sauvegardee.txt')
+
 
     partie.jouer()

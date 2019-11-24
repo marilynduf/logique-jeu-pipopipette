@@ -168,9 +168,9 @@ class PartiePipopipette:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
+        joueur = self.joueur_courant
         print('\nC\'est au tour du joueur', self.joueur_courant.couleur, sep=' ')  # affiche le joueur qui doit jouer
 
-        joueur = self.joueur_courant
         coup_choisi = joueur.choisir_coup(self.planche)  # return coup choisi
         coup_verification = self.planche.valider_coup(coup_choisi)  # valide coup choisi
         coup_valide = coup_verification[0]
@@ -303,9 +303,16 @@ class PartiePipopipette:
         couleur_joueur_courant = self.joueur_courant.couleur
         type_joueur_rouge = self.joueur_rouge.obtenir_type_joueur()
         type_joueur_bleu = self.joueur_bleu.obtenir_type_joueur()
-        reste_des_lignes = self.planche.convertir_en_chaine()
+        lignes_et_boites_jouees = self.planche.convertir_en_chaine()
 
-        return nom_fichier,
+        info_partie_en_cour = couleur_joueur_courant + '\n' + type_joueur_bleu + '\n' + type_joueur_rouge + '\n' + lignes_et_boites_jouees
+        print(info_partie_en_cour)
+
+        fichier_destination = open('nouvelle_partie_cour.txt', 'w')
+        fichier_destination.write(info_partie_en_cour)  # enregistre les phrases encodées dans le fichier
+        fichier_destination.close()
+
+        return nom_fichier, 'nouvelle_partie_cour.txt'
 
 
     def charger(self, nom_fichier):
@@ -323,5 +330,23 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
 
+
+        fichier_source = open(nom_fichier)
+
+        info_lignes = []
+
+        for ligne in fichier_source:
+            ligne = ligne.strip()
+            info_lignes.append(ligne)
+
+        couleur = info_lignes[0]
+        type_joueur_rouge = info_lignes[1]
+        type_joueur_bleu = info_lignes[2]
+
+        self.joueur_rouge = self.creer_joueur_selon_type(type_joueur_rouge, couleur)
+        self.joueur_bleu = self.creer_joueur_selon_type(type_joueur_bleu, 'bleu')
+        self.joueur_courant = self.joueur_rouge
+        self.joueur_courant.couleur = couleur
+
+        fichier_source.close()

@@ -523,25 +523,25 @@ class Planche:
         """
 
         #  WARNING : voir si format de récolte de données est correct. p-ê plus un tableau
-        chaine_info_lignes = ''
+        chaine_lignes = ''
         for idx_ligne in self.lignes:  # retourne les infos des lignes jouées
             if self.lignes[idx_ligne].jouee:
                 ligne = str(idx_ligne[0])
                 colonne = str(idx_ligne[1])
                 orientation = idx_ligne[2]
-                chaine_info_lignes += ligne + ',' + colonne + ',' + orientation + '\n'
+                chaine_lignes += ligne + ',' + colonne + ',' + orientation + '\n'
 
-        chaine_info_boites = ''
+        chaine_boites = ''
         for idx_boite in self.boites:  # retourne les infos des boites pleines
             if self.boites[idx_boite].pleine:
                 ligne = str(idx_boite[0])
                 colonne = str(idx_boite[1])
                 couleur = self.boites[idx_boite].couleur
-                chaine_info_boites += ligne + ',' + colonne + ',' + couleur + '\n'
+                chaine_boites += ligne + ',' + colonne + ',' + couleur + '\n'
 
-        chaine_info_partie = chaine_info_lignes + chaine_info_boites
+        chaine_partie = chaine_lignes + chaine_boites
 
-        return chaine_info_partie
+        return chaine_partie
 
     def charger_dune_chaine(self, chaine):
         """
@@ -569,11 +569,11 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        lignes_jouees = chaine.split('\n')
-        for ligne_jouee in lignes_jouees:
-            ligne = int(ligne_jouee[0])
-            colonne = int(ligne_jouee[2])
-            attribut = str(ligne_jouee[4])
+        coups_joues = chaine.split('\n')
+        for coup_joue in coups_joues:
+            ligne = int(coup_joue[0])
+            colonne = int(coup_joue[2])
+            attribut = str(coup_joue[4])
 
             if attribut == 'H' or attribut == 'V':
                 self.lignes[(ligne, colonne, attribut)].jouee = True
