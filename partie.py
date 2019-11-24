@@ -335,7 +335,6 @@ class PartiePipopipette:
         fichier_source = open(nom_fichier)
 
         info_lignes = []
-
         for ligne in fichier_source:
             ligne = ligne.strip()
             info_lignes.append(ligne)
@@ -343,6 +342,17 @@ class PartiePipopipette:
         couleur = info_lignes[0]
         type_joueur_rouge = info_lignes[1]
         type_joueur_bleu = info_lignes[2]
+
+        for ligne1 in info_lignes[3:]:
+            ligne = int(ligne1[0])
+            colonne = int(ligne1[2])
+            attribut = ligne1[4]
+            # planche = Planche()
+            if attribut == 'H' or attribut == 'V':
+                self.planche.lignes[(ligne, colonne, attribut)].jouee = True
+            else:
+                self.planche.boites[(ligne, colonne)].pleine = True
+                self.planche.boites[(ligne, colonne)].couleur = attribut
 
         self.joueur_rouge = self.creer_joueur_selon_type(type_joueur_rouge, couleur)
         self.joueur_bleu = self.creer_joueur_selon_type(type_joueur_bleu, 'bleu')
