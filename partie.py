@@ -23,8 +23,11 @@ class PartiePipopipette:
         """
         ÉTAPE 4
 
-        On initialise ici quatre attributs : self.joueur_rouge,
-        self.joueur_bleu, self.joueur_courant et self.couleur_joueur_courant.
+        On initialise ici quatre attributs :
+        self.joueur_rouge,
+        self.joueur_bleu,
+        self.joueur_courant
+        self.couleur_joueur_courant.
 
         Pour créer les attributs self.joueur_rouge et self.joueur_bleu, faites
         appel à self.creer_joueur().
@@ -39,7 +42,11 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        self.joueur_rouge = self.creer_joueur('rouge')  # crée le joueur rouge
+        self.joueur_bleu = self.creer_joueur('bleu')  # crée le joueur bleu
+        self.joueur_courant = self.joueur_rouge  # assigne le joueur rouge au joueur courant
+        self.couleur_joueur_courant = 'rouge'  # assigne la couleur rouge au joueur courant
 
     def creer_joueur(self, couleur):
         """
@@ -66,7 +73,23 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        type_joueur = ''
+
+        # crée le type de joueur pour la couleur rouge
+        if couleur == 'rouge':
+            while type_joueur != 'Humain' and type_joueur != 'Ordinateur':
+                type_joueur = input('Quel type de joueur désirez-vous pour la couleur rouge? Entrez Humain ou Ordinateur')
+
+        # crée le type de joueur pour la couleur bleu
+        if couleur == 'bleu':
+            while type_joueur != 'Humain' and type_joueur != 'Ordinateur':
+                type_joueur = input(
+                    'Quel type de joueur désirez-vous pour la couleur bleu? Entrez Humain ou Ordinateur')
+
+        joueur = self.creer_joueur_selon_type(type_joueur, couleur)
+
+        return joueur
 
     def creer_joueur_selon_type(self, type_joueur, couleur):
         """
@@ -90,7 +113,14 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        if type_joueur == 'Humain':
+            joueur = JoueurHumain(couleur)  # crée le type de joueur Humain
+
+        else:
+            joueur = JoueurOrdinateur(couleur)  # crée le type de joueur Ordinateur
+
+        return joueur
 
     def jouer(self):
         """
@@ -106,22 +136,33 @@ class PartiePipopipette:
         on quitte la boucle.
 
         Quand on sort de la boucle principale, on fait afficher le
-        message de fin de la partie.
+        message de fin de la partie.()
 
         Utilisez les fonctions self.partie_terminee(), self.jouer_tour() et
         self.message_fin_partie() pour vous faciliter la tâche.
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        print('\nDébut de la partie!')
+        print(self.planche)  # affiche la planche du jeu
+
+        partie_terminee = False
+
+        # Démarre le jeux
+        while not partie_terminee:
+            self.jouer_tour()
+            partie_terminee = self.partie_terminee()
+
+        # Fin du jeu
+        print(self.message_fin_partie())
 
     def jouer_tour(self):
         """
         ÉTAPE 5
 
         Cette méthode commence par afficher à quel joueur c'est
-        le tour de jouer et faire imprimer l'état de la planche avec
-        print(self.planche).
+        le tour de jouer.
 
         On va ensuite chercher le coup choisi par le joueur courant
         avec la méthode choisir_coup() de Joueur en lui passant la
@@ -132,10 +173,32 @@ class PartiePipopipette:
         pour plus de détails.
 
         On finit par jouer le coup (validé) avec la méthode self.jouer_coup().
+        et faire imprimer l'état de la planche avec print(self.planche).
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        joueur = self.joueur_courant
+        print('\nC\'est au tour du joueur', self.joueur_courant.couleur, sep=' ')  # affiche le joueur qui doit jouer
+
+        # demande au joueur de choisir un coup
+        coup_choisi = joueur.choisir_coup(self.planche)
+        coup_verification = self.planche.valider_coup(coup_choisi)
+        coup_valide = coup_verification[0]
+
+        # vérifie si le coup est valide
+        while not coup_valide:
+            message = coup_verification[1]
+            print(message)
+
+            # redemande au joueur de choisir un coup
+            coup_choisi = joueur.choisir_coup(self.planche)
+            coup_verification = self.planche.valider_coup(coup_choisi)
+            coup_valide = coup_verification[0]
+
+        if coup_valide:
+            self.jouer_coup(coup_choisi)  # applique le coup
+            print(self.planche)  # affiche la planche qui est mise à jour après le coup
 
     def jouer_coup(self, coup):
         """
@@ -153,7 +216,16 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        couleur = self.joueur_courant.couleur
+
+        self.planche.jouer_coup(coup, couleur)  # applique le coup du joueur courant sur la planche
+
+        maj_boite = self.planche.maj_boites()  # fait la mise è jour des boites
+
+        # change de joueur si aucune boite n'a été remplie
+        if not maj_boite:
+            self.changer_joueur()
 
     def partie_terminee(self):
         """
@@ -177,7 +249,22 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+        planche_pleine = self.planche.est_pleine()
+
+        # calcul le nombre de boite remplie par chacun des joueurs
+        if planche_pleine:
+            bilan_boite = self.planche.bilan_boites()
+            nb_boite_bleu = bilan_boite[0]
+            nb_boite_rouge = bilan_boite[1]
+
+            # détermine le joueur ganant
+            if nb_boite_rouge > nb_boite_bleu:
+                self.gagnant_partie = self.joueur_rouge.couleur
+
+            else:
+                self.gagnant_partie = self.joueur_bleu.couleur
+
+            return True
 
     def changer_joueur(self):
         """
@@ -188,7 +275,13 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        if self.joueur_courant.couleur == 'rouge':
+            self.joueur_courant = self.joueur_bleu
+            self.couleur_joueur_courant = 'bleu'
+        else:
+            self.joueur_courant = self.joueur_rouge
+            self.couleur_joueur_courant = 'rouge'
 
     def message_fin_partie(self):
         """
@@ -205,7 +298,9 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+        message_fin_partie = 'Le gagnant de la partie est le joueur ' + self.gagnant_partie + '!'
+
+        return message_fin_partie
 
     def sauvegarder(self, nom_fichier):
         """
@@ -228,7 +323,19 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        couleur_joueur_courant = self.joueur_courant.couleur
+        type_joueur_rouge = self.joueur_rouge.obtenir_type_joueur()
+        type_joueur_bleu = self.joueur_bleu.obtenir_type_joueur()
+        lignes_et_boites_jouees = self.planche.convertir_en_chaine()
+
+        info_partie_en_cour = couleur_joueur_courant + '\n' + type_joueur_bleu + '\n' + type_joueur_rouge + '\n' + lignes_et_boites_jouees
+
+        fichier_destination = open('partie_sauvegardee.txt', 'w')
+        fichier_destination.write(info_partie_en_cour)
+        fichier_destination.close()
+
+        return nom_fichier, 'partie_sauvegardee_2.txt'
 
     def charger(self, nom_fichier):
         """
@@ -245,4 +352,34 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        fichier_source = open(nom_fichier)
+        info_lignes = []
+
+        for ligne in fichier_source:
+            ligne = ligne.strip()
+            info_lignes.append(ligne)
+
+        # prend les 3 premières lignes de la liste
+        couleur = info_lignes[0]
+        type_joueur_rouge = info_lignes[1]
+        type_joueur_bleu = info_lignes[2]
+
+        for info in info_lignes[3:]:
+            ligne = int(info[0])
+            colonne = int(info[2])
+            attribut_ligne = str(info[4])
+
+            if attribut_ligne == 'H' or attribut_ligne == 'V':
+                self.planche.lignes[(ligne, colonne, attribut_ligne)].jouee = True
+            else:
+                attribut_boite = str(info[4:])
+                self.planche.boites[(ligne, colonne)].pleine = True
+                self.planche.boites[(ligne, colonne)].couleur = attribut_boite
+
+        self.joueur_rouge = self.creer_joueur_selon_type(type_joueur_rouge, couleur)
+        self.joueur_bleu = self.creer_joueur_selon_type(type_joueur_bleu, 'bleu')
+        self.joueur_courant = self.joueur_rouge
+        self.joueur_courant.couleur = couleur
+
+        fichier_source.close()

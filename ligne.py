@@ -17,16 +17,13 @@ class Ligne:
         """
         Nécessaire pour le TP4, NE PAS MODIFIER.
         """
-
         if self.jouee:
             return Ligne.COULEUR_JOUEE
         else:
             return Ligne.COULEUR_NON_JOUEE
-
 
     def __repr__(self):
         """
         Nécessaire pour les tests, NE PAS MODIFIER.
         """
         return 'Ligne {}jouée'.format('' if self.jouee else 'non ')
-
