@@ -221,8 +221,9 @@ class Planche:
         self.position_dernier_coup = index_ligne
         self.couleur_dernier_coup = couleur
 
+        # Mettre à jour l'attribut jouee de la ligne située à l'index joué
         ligne_jouee = Ligne()
-        ligne_jouee.jouee = True  # Met à jour l'attribut jouee de la ligne située à l'index joué
+        ligne_jouee.jouee = True
 
         self.lignes[self.position_dernier_coup] = ligne_jouee
 
@@ -274,6 +275,7 @@ class Planche:
                 condition_orientation_message = 'L\'orientation n\'est pas bonne. Vous devez entrez V ou H\n'
                 messages_a_afficher = messages_a_afficher + condition_orientation_message
 
+
             if not self.lignes[index_ligne].jouee:  # condition 3: la ligne ne doit pas être déjà jouée
                 condition_ligne_jouee = True
             else:
@@ -303,12 +305,7 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        coups_possibles = []
-
-        for ligne_index in self.lignes:
-            if not self.lignes[ligne_index].jouee:
-                coups_possibles.append(ligne_index)
-        return coups_possibles
+        pass
 
     def maj_boites(self):
         """
@@ -546,4 +543,23 @@ class Planche:
 
         return planche
 
+# def check(list1):
+#
+#     # traverse in the list
+#     for x in list1:
+#
+#         # compare with all the values
+#         # with val
+#         if not x:
+#             return False
+#     return False
+
+
+# def check(list1):
+#     return all(x for x in list1)
+# return False
+# #
+# planche1 = Planche()
+# # # print('planche1.lignes', planche1.lignes)
+# print('saDVASDV::', planche1.valider_coup((0, 0, 'Invalide')))
 
