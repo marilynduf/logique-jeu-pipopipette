@@ -40,6 +40,7 @@ class Planche:
     # Vous pouvez leur accéder avec Planche.N_BOITES_H par exemple.
     # Noter que dans le vidéo explicatif, self.N_COLONNES représentait
     # self.N_BOITES_V et ainsi de suite.
+
     N_BOITES_V = 3
     N_BOITES_H = 3
 
@@ -139,13 +140,12 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        # Créer un dictionnaire de boites vide
+
         self.boites = {}
 
-        # Création des boites
-        for index_boite_horizontale in range(self.N_BOITES_H):
-            for index_boite_verticale in range(self.N_BOITES_V):
-                self.boites[(index_boite_horizontale, index_boite_verticale)] = Boite()
+        for idx_boite_horizontale in range(self.N_BOITES_H):  # Crée les boites
+            for idx_boite_verticale in range(self.N_BOITES_V):
+                self.boites[(idx_boite_horizontale, idx_boite_verticale)] = Boite()
 
     def coup_dans_les_limites(self, index_ligne):
         """
@@ -253,20 +253,21 @@ class Planche:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        message_erreur_1 = '\nCoup invalide! L\'orientation entrées n\'est pas correcte. Vous devez entrez V ou H\n'
-        message_erreur_2 = '\nCoup invalide! Le coup joué en dehors des limites de la grille.\n'
-        message_erreur_3 = '\nCoup invalide! Coup dans une ligne déjà jouée\n'
+        message_de_base = '\nCoup invalide! '
+        definition_erreur_1 = 'L\'orientation entrées n\'est pas correcte. Vous devez entrez V ou H\n'
+        definition_erreur_2 = 'Le coup joué en dehors des limites de la grille.\n'
+        definition_erreur_3 = 'Coup dans une ligne déjà jouée\n'
 
         orientation = index_ligne[2]
 
-        if orientation != 'H' and orientation != 'V':  # condition 1 : l'orientation entrée doit être H ou V
-            return False, message_erreur_1
+        if orientation != 'H' and orientation != 'V':  # cond.1 : vérifie si l'entrée est H ou V
+            return False, message_de_base + definition_erreur_1
 
-        if self.coup_dans_les_limites(index_ligne) == False:  # condition 2: le coup doit être compris dans les limites
-            return False, message_erreur_2
+        if not self.coup_dans_les_limites(index_ligne):  # cond.2: vérifie si le coups est dans les limites
+            return False, message_de_base + definition_erreur_2
 
-        if self.lignes[index_ligne].jouee:  # condition 1: la ligne ne doit pas être déjà jouée
-            return False, message_erreur_3
+        if self.lignes[index_ligne].jouee:  # cond.3: vérifie si la ligne est déjà jouée
+            return False, message_de_base + definition_erreur_3
 
         else:
             return True, None
@@ -284,9 +285,9 @@ class Planche:
         """
         coups_possibles = []
 
-        for ligne_index in self.lignes:
-            if not self.lignes[ligne_index].jouee:
-                coups_possibles.append(ligne_index)
+        for ligne_idx in self.lignes:
+            if not self.lignes[ligne_idx].jouee:
+                coups_possibles.append(ligne_idx)
         return coups_possibles
 
     def maj_boites(self):
@@ -307,9 +308,11 @@ class Planche:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        boites_a_valider = self.obtenir_idx_boites_a_valider()  # obtient l'index des boites à valider
+        # obtient l'index des boites à valider
+        boites_a_valider = self.obtenir_idx_boites_a_valider()
 
-        if self.valider_boites(boites_a_valider):  # assigne la bonne couleur au besoin
+
+        if self.valider_boites(boites_a_valider):
             return True
         else:
             return False
@@ -348,12 +351,18 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
+
         dernier_coup = self.position_dernier_coup
+
         ligne = dernier_coup[0]
         colonne = dernier_coup[1]
         orientation = dernier_coup[2]
+
+        boite_1 = ''
+        boite_2 = ''
         boites_touchees = []
 
+        # calcul les index des boites touchées par le coup
         if orientation == 'V':
             boite_1 = (ligne, colonne)
             boite_2 = (ligne, colonne - 1)
@@ -362,6 +371,7 @@ class Planche:
             boite_1 = (ligne, colonne)
             boite_2 = (ligne - 1, colonne)
 
+        # vérifie si l'index de la boite touchée est dans les limites
         if boite_1 in self.boites:
             boites_touchees.append(boite_1)
 
@@ -394,25 +404,25 @@ class Planche:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        ligne_boite = idx_boite[0]
-        colonne_boite = idx_boite[1]
-        ligne_v_gauche = (ligne_boite, colonne_boite, 'V')
-        ligne_v_droite = (ligne_boite, colonne_boite + 1, 'V')
-        ligne_h_super = (ligne_boite, colonne_boite, 'H')
-        ligne_h_infer = (ligne_boite + 1, colonne_boite, 'H')
-        lignes_de_la_boite = [ligne_v_gauche, ligne_v_droite, ligne_h_super, ligne_h_infer]
-
+        idx_ligne_boite = idx_boite[0]
+        idx_colonne_boite = idx_boite[1]
+        ligne_verti_gauche = (idx_ligne_boite, idx_colonne_boite, 'V')
+        ligne_verti_droite = (idx_ligne_boite, idx_colonne_boite + 1, 'V')
+        ligne_horiz_super = (idx_ligne_boite, idx_colonne_boite, 'H')
+        ligne_horiz_infer = (idx_ligne_boite + 1, idx_colonne_boite, 'H')
+        lignes_de_la_boite = [ligne_verti_gauche, ligne_verti_droite, ligne_horiz_super, ligne_horiz_infer]
         nb_ligne_jouee = 0
 
         for ligne in lignes_de_la_boite:
-            ligne = self.lignes[ligne]
 
+            ligne = self.lignes[ligne]
             if not ligne.jouee:
                 nb_ligne_jouee = nb_ligne_jouee + 0
                 continue
 
             if ligne.jouee:
-                nb_ligne_jouee = nb_ligne_jouee = nb_ligne_jouee + 1
+                nb_ligne_jouee = nb_ligne_jouee + 1  # calcul le nombre de lignes jouées autour
+                # d'une boite
 
         return nb_ligne_jouee
 
@@ -447,11 +457,15 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
+
         au_moins_une_boite_remplie = False
+
         for idx_boite in idx_boites:
+
             boite = self.boites[idx_boite]
             if not boite.pleine:
                 nb_lignes_jouees_boite = self.compter_lignes_jouees_boite(idx_boite)
+
                 if nb_lignes_jouees_boite == 4:
                     boite.assigner_couleur(self.couleur_dernier_coup)
                     au_moins_une_boite_remplie = True
@@ -490,12 +504,18 @@ class Planche:
         nb_boites_rouges = 0
 
         for boite in self.boites:
+
             boite = self.boites[boite]
+
+            # calcul le nombre de boites bleues
             if boite.couleur == 'bleu':
                 nb_boites_bleues += 1
                 continue
+
+            # calcul le nombre de boites rouges
             if boite.couleur == 'rouge':
                 nb_boites_rouges += 1
+
         return nb_boites_bleues,  nb_boites_rouges
 
     def convertir_en_chaine(self):
@@ -522,9 +542,10 @@ class Planche:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        #  WARNING : voir si format de récolte de données est correct. p-ê plus un tableau
         chaine_lignes = ''
-        for idx_ligne in self.lignes:  # retourne les infos des lignes jouées
+
+        # construit une chaine contenant les infos des lignes jouées
+        for idx_ligne in self.lignes:
             if self.lignes[idx_ligne].jouee:
                 ligne = str(idx_ligne[0])
                 colonne = str(idx_ligne[1])
@@ -532,7 +553,9 @@ class Planche:
                 chaine_lignes += ligne + ',' + colonne + ',' + orientation + '\n'
 
         chaine_boites = ''
-        for idx_boite in self.boites:  # retourne les infos des boites pleines
+
+        # construit une chaine contenant les infos des boites pleines
+        for idx_boite in self.boites:
             if self.boites[idx_boite].pleine:
                 ligne = str(idx_boite[0])
                 colonne = str(idx_boite[1])
@@ -569,7 +592,9 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
+
         coups_joues = chaine.split('\n')
+
         for coup_joue in coups_joues:
             ligne = int(coup_joue[0])
             colonne = int(coup_joue[2])
@@ -579,7 +604,6 @@ class Planche:
                 self.lignes[(ligne, colonne, attribut)].jouee = True
             else:
                 self.boites[(ligne, colonne)].pleine = True
-
 
     def __repr__(self):
         """

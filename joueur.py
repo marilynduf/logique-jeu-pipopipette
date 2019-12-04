@@ -75,11 +75,12 @@ class JoueurHumain(Joueur):
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
+        # demande à l'usager quel coup il désire jouer
         ligne_choisie = int(input('Quel est l\'index de la ligne du coup que vous désirez jouer? '))
         colonne_choisie = int(input('Quel est l\'index de la colonne du coup que vous désirez jouer?'))
         orientation_choisie = input('Quel est l\'orientation du coup que vous désirez jouer?')
 
-        return ligne_choisie, colonne_choisie, orientation_choisie
+        return ligne_choisie, colonne_choisie, orientation_choisie.upper()
 
 
 class JoueurOrdinateur(Joueur):
@@ -118,6 +119,8 @@ class JoueurOrdinateur(Joueur):
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
+
+        # génère un coup au hasard
         coups_possibles = planche.obtenir_coups_possibles()
         random_coup = random.choice(coups_possibles)
 
