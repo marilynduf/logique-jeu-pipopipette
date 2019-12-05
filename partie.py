@@ -184,17 +184,15 @@ class PartiePipopipette:
         # demande au joueur de choisir un coup
         coup_choisi = joueur.choisir_coup(self.planche)
         coup_verification = self.planche.valider_coup(coup_choisi)
-        coup_valide = coup_verification[0]
+        coup_valide = coup_verification
 
         # vérifie si le coup est valide
         while not coup_valide:
-            message = coup_verification[1]
-            print(message)
 
             # redemande au joueur de choisir un coup
             coup_choisi = joueur.choisir_coup(self.planche)
             coup_verification = self.planche.valider_coup(coup_choisi)
-            coup_valide = coup_verification[0]
+            coup_valide = coup_verification
 
         if coup_valide:
             self.jouer_coup(coup_choisi)  # applique le coup

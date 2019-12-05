@@ -11,3 +11,14 @@ class ErreurPositionCoup(Exception):
 class ErreurValeurTropGrande(ErreurPositionCoup):
     pass
 
+
+class ErreurOrientation(ErreurPositionCoup):
+    pass
+
+
+class ErreurHorsLimites(ErreurPositionCoup):
+    pass
+
+
+class ErreurDejaJouee(ErreurPositionCoup):
+    pass

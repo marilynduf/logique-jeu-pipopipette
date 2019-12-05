@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import random
-from exceptions import ErreurPositionCoup, ErreurValeurTropGrande, ErreurValeur
+from exceptions import ErreurPositionCoup, ErreurValeurTropGrande, ErreurOrientation
 
 class Joueur:
     """
@@ -99,9 +99,17 @@ class JoueurHumain(Joueur):
             except ErreurValeurTropGrande as e:
                 print(e, 'est invalide! La valeur doit être comprise entre 0 et 3. Recommencez\n')
 
-        orientation_choisie = input('Quel est l\'orientation du coup que vous désirez jouer?')
+        while True:
+            try:
+                orientation_choisie = input('Quel est l\'orientation du coup que vous désirez jouer?\n').upper()
+                if orientation_choisie not in ['H', 'V']:  # cond.1 : vérifie si l'entrée est H ou V
+                    raise ErreurOrientation(orientation_choisie)
+                break
+            except ErreurOrientation as e:
+                print(e, 'n\'est pas une orientation invalide. Vous devez entrez H ou V. Recommencez')
 
-        return ligne_choisie, colonne_choisie, orientation_choisie.upper()
+
+        return ligne_choisie, colonne_choisie, orientation_choisie
 
 
 class JoueurOrdinateur(Joueur):

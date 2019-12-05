@@ -2,6 +2,7 @@
 
 from ligne import Ligne
 from boite import Boite
+from exceptions import ErreurPositionCoup, ErreurHorsLimites, ErreurDejaJouee
 
 
 class Planche:
@@ -251,25 +252,24 @@ class Planche:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        message_de_base = '\nCoup invalide! '
-        definition_erreur_1 = 'L\'orientation entrées n\'est pas correcte. Vous devez entrez V ou H\n'
-        definition_erreur_2 = 'Le coup joué en dehors des limites de la grille.\n'
-        definition_erreur_3 = 'Coup dans une ligne déjà jouée\n'
+        definition_erreur_2 = 'est en dehors des limites de la grille.\n'
+        definition_erreur_3 = 'est une ligne déjà jouée. Recommencez\n'
 
-        ligne = index_ligne[0]
-        colonne = index_ligne[1]
-        orientation = index_ligne[2]
+        try:
+            if not self.coup_dans_les_limites(index_ligne):  # cond.2: vérifie si le coups est dans les limites
+                raise ErreurHorsLimites(index_ligne)
+        except ErreurHorsLimites as e:
+            print(e, definition_erreur_2)
+            return False
 
-        if orientation not in ['H', 'V']:  # cond.1 : vérifie si l'entrée est H ou V
-            return False, message_de_base + definition_erreur_1
+        try:
+            if self.lignes[index_ligne].jouee:  # cond.3: vérifie si la ligne est déjà jouée
+                raise ErreurDejaJouee(index_ligne)
+        except ErreurDejaJouee as e:
+            print(e, definition_erreur_3)
+            return False
 
-        if not self.coup_dans_les_limites(index_ligne):  # cond.2: vérifie si le coups est dans les limites
-            return False, message_de_base + definition_erreur_2
-
-        if self.lignes[index_ligne].jouee:  # cond.3: vérifie si la ligne est déjà jouée
-            return False, message_de_base + definition_erreur_3
-
-        return True, None
+        return True
 
     def obtenir_coups_possibles(self):
         """
