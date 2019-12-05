@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import random
+from exceptions import ErreurPositionCoup, ErreurValeurTropGrande, ErreurValeur
 
 class Joueur:
     """
@@ -76,8 +77,28 @@ class JoueurHumain(Joueur):
         """
 
         # demande à l'usager quel coup il désire jouer
-        ligne_choisie = int(input('Quel est l\'index de la ligne du coup que vous désirez jouer? '))
-        colonne_choisie = int(input('Quel est l\'index de la colonne du coup que vous désirez jouer?'))
+        while True:
+            try:
+                ligne_choisie = int(input('Quel est l\'index de la ligne du coup que vous désirez jouer? '))
+                if not 3 >= ligne_choisie >= 0:
+                    raise ErreurValeurTropGrande(ligne_choisie)
+                break
+            except ValueError:
+                print('\nEntrée invalide! Vous devez entrez un chiffre. Recommencez')
+            except ErreurValeurTropGrande as e:
+                print(e, 'est invalide! La valeur doit être comprise entre 0 et 3. Recommencez')
+
+        while True:
+            try:
+                colonne_choisie = int(input('Quel est l\'index de la colonne du coup que vous désirez jouer?'))
+                if not 3 >= colonne_choisie >= 0:
+                    raise ErreurValeurTropGrande(ligne_choisie)
+                break
+            except ValueError:
+                print('\nEntrée invalide! Vous devez entrez un chiffre\n')
+            except ErreurValeurTropGrande as e:
+                print(e, 'est invalide! La valeur doit être comprise entre 0 et 3. Recommencez\n')
+
         orientation_choisie = input('Quel est l\'orientation du coup que vous désirez jouer?')
 
         return ligne_choisie, colonne_choisie, orientation_choisie.upper()
