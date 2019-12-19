@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import random
-from exceptions import ErreurPositionCoup, ErreurValeurTropGrande, ErreurOrientation
+from pipopipette.exceptions import ErreurPositionCoup, ErreurValeurTropGrande, ErreurOrientation
 
 class Joueur:
     """

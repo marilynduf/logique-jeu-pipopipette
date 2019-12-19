@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from ligne import Ligne
-from boite import Boite
-from exceptions import ErreurPositionCoup, ErreurHorsLimites, ErreurDejaJouee
-
+from pipopipette.ligne import Ligne
+from pipopipette.boite import Boite
+from pipopipette.exceptions import ErreurPositionCoup
+from tkinter import messagebox
 
 class Planche:
     """
@@ -50,7 +50,6 @@ class Planche:
         Méthode spéciale initialisant une nouvelle planche.
         """
         self.initialisation_par_defaut()
-
         self.position_dernier_coup = None
         self.couleur_dernier_coup = None
 
@@ -213,7 +212,7 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-
+        self.valider_coup(index_ligne)
         self.position_dernier_coup = index_ligne
         self.couleur_dernier_coup = couleur
         self.lignes[index_ligne].jouee = True
@@ -255,21 +254,21 @@ class Planche:
         definition_erreur_2 = 'est en dehors des limites de la grille.\n'
         definition_erreur_3 = 'est une ligne déjà jouée. Recommencez\n'
 
-        try:
-            if not self.coup_dans_les_limites(index_ligne):  # cond.2: vérifie si le coups est dans les limites
-                raise ErreurHorsLimites(index_ligne)
-        except ErreurHorsLimites as e:
-            print(e, definition_erreur_2)
-            return False
+        # try:
+        #     if not self.coup_dans_les_limites(index_ligne):  # cond.2: vérifie si le coups est dans les limites
+        #         raise ErreurPositionCoup(index_ligne)
+        # except ErreurPositionCoup as e:
+        #     print(e, definition_erreur_2)
+        #     messagebox.showinfo("Window", definition_erreur_2)
 
         try:
-            if self.lignes[index_ligne].jouee:  # cond.3: vérifie si la ligne est déjà jouée
-                raise ErreurDejaJouee(index_ligne)
-        except ErreurDejaJouee as e:
+            if self.lignes[index_ligne].jouee: # cond.3: vérifie si la ligne est déjà jouée
+                raise ErreurPositionCoup(index_ligne)
+        except ErreurPositionCoup as e:
             print(e, definition_erreur_3)
-            return False
+            messagebox.showinfo("Window", definition_erreur_3)
 
-        return True
+        return
 
     def obtenir_coups_possibles(self):
         """
@@ -487,6 +486,8 @@ class Planche:
         n_boites_rouges = sum([boite.couleur == 'rouge' for boite in self.boites.values()])
 
         return n_boites_bleues, n_boites_rouges
+
+    #----------------------------------------------------------------------------------------------
 
     def convertir_en_chaine(self):
         """

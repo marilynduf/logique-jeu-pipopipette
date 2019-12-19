@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from planche import Planche
-from joueur import JoueurOrdinateur, JoueurHumain
+from pipopipette.planche import Planche
+from pipopipette.joueur import JoueurOrdinateur, JoueurHumain
 
 
 class PartiePipopipette:
@@ -74,20 +74,20 @@ class PartiePipopipette:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        type_joueur = ''
+        # type_joueur = ''
+        #
+        # # crée le type de joueur pour la couleur rouge
+        # if couleur == 'rouge':
+        #     while type_joueur != 'Humain' and type_joueur != 'Ordinateur':
+        #         type_joueur = input('Quel type de joueur désirez-vous pour la couleur rouge? Entrez Humain ou Ordinateur')
+        #
+        # # crée le type de joueur pour la couleur bleu
+        # if couleur == 'bleu':
+        #     while type_joueur != 'Humain' and type_joueur != 'Ordinateur':
+        #         type_joueur = input(
+        #             'Quel type de joueur désirez-vous pour la couleur bleu? Entrez Humain ou Ordinateur')
 
-        # crée le type de joueur pour la couleur rouge
-        if couleur == 'rouge':
-            while type_joueur != 'Humain' and type_joueur != 'Ordinateur':
-                type_joueur = input('Quel type de joueur désirez-vous pour la couleur rouge? Entrez Humain ou Ordinateur')
-
-        # crée le type de joueur pour la couleur bleu
-        if couleur == 'bleu':
-            while type_joueur != 'Humain' and type_joueur != 'Ordinateur':
-                type_joueur = input(
-                    'Quel type de joueur désirez-vous pour la couleur bleu? Entrez Humain ou Ordinateur')
-
-        joueur = self.creer_joueur_selon_type(type_joueur, couleur)
+        joueur = self.creer_joueur_selon_type('Humain', couleur)
 
         return joueur
 
@@ -144,20 +144,8 @@ class PartiePipopipette:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        print('\nDébut de la partie!')
-        print(self.planche)  # affiche la planche du jeu
 
-        partie_terminee = False
-
-        # Démarre le jeux
-        while not partie_terminee:
-            self.jouer_tour()
-            partie_terminee = self.partie_terminee()
-
-        # Fin du jeu
-        print(self.message_fin_partie())
-
-    def jouer_tour(self):
+    def jouer_tour(self, coup):
         """
         ÉTAPE 5
 
@@ -178,25 +166,10 @@ class PartiePipopipette:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-        joueur = self.joueur_courant
-        print('\nC\'est au tour du joueur', self.joueur_courant.couleur, sep=' ')  # affiche le joueur qui doit jouer
 
-        # demande au joueur de choisir un coup
-        coup_choisi = joueur.choisir_coup(self.planche)
-        coup_verification = self.planche.valider_coup(coup_choisi)
-        coup_valide = coup_verification
 
-        # vérifie si le coup est valide
-        while not coup_valide:
+        self.jouer_coup(coup)  # applique le coup
 
-            # redemande au joueur de choisir un coup
-            coup_choisi = joueur.choisir_coup(self.planche)
-            coup_verification = self.planche.valider_coup(coup_choisi)
-            coup_valide = coup_verification
-
-        if coup_valide:
-            self.jouer_coup(coup_choisi)  # applique le coup
-            print(self.planche)  # affiche la planche qui est mise à jour après le coup
 
     def jouer_coup(self, coup):
         """
