@@ -212,7 +212,7 @@ class Planche:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        self.valider_coup(index_ligne)
+
         self.position_dernier_coup = index_ligne
         self.couleur_dernier_coup = couleur
         self.lignes[index_ligne].jouee = True
@@ -267,8 +267,9 @@ class Planche:
         except ErreurPositionCoup as e:
             print(e, definition_erreur_3)
             messagebox.showinfo("Window", definition_erreur_3)
+            return False
 
-        return
+        return True
 
     def obtenir_coups_possibles(self):
         """
@@ -486,95 +487,6 @@ class Planche:
         n_boites_rouges = sum([boite.couleur == 'rouge' for boite in self.boites.values()])
 
         return n_boites_bleues, n_boites_rouges
-
-    #----------------------------------------------------------------------------------------------
-
-    def convertir_en_chaine(self):
-        """
-        ÉTAPE 6
-
-        Retourne une chaîne de caractères correspondant à l'état actuel
-        de la planche. Cette chaîne contiendra l'information relative
-        aux lignes ainsi qu'aux boîtes.
-
-        On ajoute d'abord l'information des lignes: pour chaque ligne
-        jouée (où l'attribut ligne.jouee est True), on ajoute une entrée
-        'ligne,colonne,orientation\n' correspondant à l'index de la ligne
-        et un changement de ligne à la chaîne de caractères.
-
-        On ajoute ensuite l'information des boîtes: pour chaque boîte
-        pleine (où l'attribut boite.pleine est True), on ajoute une
-        entrée 'ligne,colonne,couleur\n' correspondant à l'index de la boîte,
-        sa couleur et un changement de ligne à la chaîne de caractères.
-
-        Returns:
-            str: La chaîne de caractères représentant la planche.
-
-        TODO: Vous devez compléter le corps de cette fonction.
-        """
-
-        chaine_lignes = ''
-
-        # construit une chaine contenant les infos des lignes jouées
-        for idx_ligne in self.lignes:
-            if self.lignes[idx_ligne].jouee:
-                ligne = str(idx_ligne[0])
-                colonne = str(idx_ligne[1])
-                orientation = idx_ligne[2]
-                chaine_lignes += ligne + ',' + colonne + ',' + orientation + '\n'
-
-        chaine_boites = ''
-
-        # construit une chaine contenant les infos des boites pleines
-        for idx_boite in self.boites:
-            if self.boites[idx_boite].pleine:
-                ligne = str(idx_boite[0])
-                colonne = str(idx_boite[1])
-                couleur = self.boites[idx_boite].couleur
-                chaine_boites += ligne + ',' + colonne + ',' + couleur + '\n'
-
-        chaine_partie = chaine_lignes + chaine_boites
-
-        return chaine_partie
-
-    def charger_dune_chaine(self, chaine):
-        """
-        ÉTAPE 6
-
-        Remplit la grille à partir d'une chaîne de caractères comportant
-        l'information sur les lignes et les boîtes.
-
-        Chaque ligne du fichier contient l'information suivante :
-        ligne,colonne,attribut
-
-        Si l'attribut est 'H' ou 'V', c'est que la ligne du fichier
-        contient l'information relative à une ligne jouée et attribut
-        représente l'orientation de la ligne. Dans ce cas, on va chercher
-        la ligne correspondant à l'index (ligne, colonne, attribut) de
-        self.lignes et on assigne la valeur True à son attribut jouee.
-
-        Sinon, cela veut dire que attribut correspond à la couleur d'une
-        boîte pleine. Dans ce cas, on va donc chercher la boîte à l'index
-        (ligne, colonne) et on appelle sa méthode assigner_couleur() avec
-        l'argument attribut (la couleur de la boîte à cet index).
-
-        Args :
-            chaine (str): la chaîne de caractères représentant la planche
-
-        TODO: Vous devez compléter le corps de cette fonction.
-        """
-
-        coups_joues = chaine.split('\n')
-
-        for coup_joue in coups_joues:
-            ligne = int(coup_joue[0])
-            colonne = int(coup_joue[2])
-            attribut = str(coup_joue[4])
-
-            if attribut == 'H' or attribut == 'V':
-                self.lignes[(ligne, colonne, attribut)].jouee = True
-            else:
-                self.boites[(ligne, colonne)].pleine = True
 
     def __repr__(self):
         """

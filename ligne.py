@@ -7,7 +7,7 @@ class Ligne:
 
     Une ligne est constituée d'un attribut booléen jouee.
     """
-    COULEUR_JOUEE = 'salmon'
+    COULEUR_JOUEE = '#0e1111'
     COULEUR_NON_JOUEE = 'white'
 
     def __init__(self):

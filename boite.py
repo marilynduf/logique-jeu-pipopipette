@@ -10,7 +10,7 @@ class Boite:
 
     Cette classe vous est fournie, vous n'avez pas à la modifier.
     """
-    DICT_COULEURS = {'': 'grey', 'bleu': 'blue', 'rouge': 'red'}
+    DICT_COULEURS = {'': 'white', 'bleu': '#0471ce', 'rouge': '#e52222'}
 
     def __init__(self):
         self.couleur = ''

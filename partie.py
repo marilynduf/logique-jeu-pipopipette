@@ -144,7 +144,6 @@ class PartiePipopipette:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-
     def jouer_tour(self, coup):
         """
         ÉTAPE 5
@@ -166,10 +165,7 @@ class PartiePipopipette:
         TODO: Vous devez compléter le corps de cette fonction.
         """
 
-
-
         self.jouer_coup(coup)  # applique le coup
-
 
     def jouer_coup(self, coup):
         """
@@ -187,16 +183,18 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
+        coup_valide = self.planche.valider_coup(coup)
+        if coup_valide:
+            self.planche.jouer_coup(coup, self.joueur_courant.couleur)
+            couleur = self.joueur_courant.couleur
 
-        couleur = self.joueur_courant.couleur
+            self.planche.jouer_coup(coup, couleur)  # applique le coup du joueur courant sur la planche
 
-        self.planche.jouer_coup(coup, couleur)  # applique le coup du joueur courant sur la planche
+            maj_boite = self.planche.maj_boites()  # fait la mise è jour des boites
 
-        maj_boite = self.planche.maj_boites()  # fait la mise è jour des boites
-
-        # change de joueur si aucune boite n'a été remplie
-        if not maj_boite:
-            self.changer_joueur()
+            # change de joueur si aucune boite n'a été remplie
+            if not maj_boite:
+                self.changer_joueur()
 
     def partie_terminee(self):
         """
@@ -237,6 +235,8 @@ class PartiePipopipette:
 
             return True
 
+        return False
+
     def changer_joueur(self):
         """
         ÉTAPE 5
@@ -269,44 +269,44 @@ class PartiePipopipette:
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        message_fin_partie = 'Le gagnant de la partie est le joueur ' + self.gagnant_partie + '!'
+        message_fin_partie = 'Fin de la partie.\n Le gagnant de la partie est le joueur {} !'.format(self.gagnant_partie)
 
         return message_fin_partie
 
-    def sauvegarder(self, nom_fichier):
-        """
-        ÉTAPE 6
-
-        Sauvegarde une partie dans un fichier. Le fichier
-        contiendra:
-        - Une ligne indiquant la couleur du joueur courant.
-        - Une ligne contenant le type du joueur rouge.
-        - Une ligne contenant le type du joueur bleu.
-        - Le reste des lignes correspondant aux lignes et aux boîtes. Voir la
-          méthode convertir_en_chaine() de la planche pour le
-          format.
-
-        Faites appel à la fonction obtenir_type_joueur() de
-        la classe Joueur pour savoir le type d'un Joueur.
-
-        Args :
-            nom_fichier, le string du nom du fichier où sauvegarder.
-
-        TODO: Vous devez compléter le corps de cette fonction.
-        """
-
-        couleur_joueur_courant = self.joueur_courant.couleur
-        type_joueur_rouge = self.joueur_rouge.obtenir_type_joueur()
-        type_joueur_bleu = self.joueur_bleu.obtenir_type_joueur()
-        lignes_et_boites_jouees = self.planche.convertir_en_chaine()
-
-        info_partie_en_cour = couleur_joueur_courant + '\n' + type_joueur_bleu + '\n' + type_joueur_rouge + '\n' + lignes_et_boites_jouees
-
-        fichier_destination = open('partie_sauvegardee.txt', 'w')
-        fichier_destination.write(info_partie_en_cour)
-        fichier_destination.close()
-
-        return nom_fichier, 'partie_sauvegardee_2.txt'
+    # def sauvegarder(self, nom_fichier):
+    #     """
+    #     ÉTAPE 6
+    #
+    #     Sauvegarde une partie dans un fichier. Le fichier
+    #     contiendra:
+    #     - Une ligne indiquant la couleur du joueur courant.
+    #     - Une ligne contenant le type du joueur rouge.
+    #     - Une ligne contenant le type du joueur bleu.
+    #     - Le reste des lignes correspondant aux lignes et aux boîtes. Voir la
+    #       méthode convertir_en_chaine() de la planche pour le
+    #       format.
+    #
+    #     Faites appel à la fonction obtenir_type_joueur() de
+    #     la classe Joueur pour savoir le type d'un Joueur.
+    #
+    #     Args :
+    #         nom_fichier, le string du nom du fichier où sauvegarder.
+    #
+    #     TODO: Vous devez compléter le corps de cette fonction.
+    #     """
+    #
+    #     couleur_joueur_courant = self.joueur_courant.couleur
+    #     type_joueur_rouge = self.joueur_rouge.obtenir_type_joueur()
+    #     type_joueur_bleu = self.joueur_bleu.obtenir_type_joueur()
+    #     lignes_et_boites_jouees = self.planche.convertir_en_chaine()
+    #
+    #     info_partie_en_cour = couleur_joueur_courant + '\n' + type_joueur_bleu + '\n' + type_joueur_rouge + '\n' + lignes_et_boites_jouees
+    #
+    #     fichier_destination = open('partie_sauvegardee.txt', 'w')
+    #     fichier_destination.write(info_partie_en_cour)
+    #     fichier_destination.close()
+    #
+    #     return nom_fichier, 'partie_sauvegardee_2.txt'
 
     def charger(self, nom_fichier):
         """
