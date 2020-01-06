@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import random
-
+from pipopipette.exceptions import ErreurPositionCoup, ErreurValeurTropGrande, ErreurOrientation
 
 class Joueur:
     """
@@ -75,7 +75,41 @@ class JoueurHumain(Joueur):
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        # demande à l'usager quel coup il désire jouer
+        while True:
+            try:
+                ligne_choisie = int(input('Quel est l\'index de la ligne du coup que vous désirez jouer? '))
+                if not 3 >= ligne_choisie >= 0:
+                    raise ErreurValeurTropGrande(ligne_choisie)
+                break
+            except ValueError:
+                print('\nEntrée invalide! Vous devez entrez un chiffre. Recommencez')
+            except ErreurValeurTropGrande as e:
+                print(e, 'est invalide! La valeur doit être comprise entre 0 et 3. Recommencez')
+
+        while True:
+            try:
+                colonne_choisie = int(input('Quel est l\'index de la colonne du coup que vous désirez jouer?'))
+                if not 3 >= colonne_choisie >= 0:
+                    raise ErreurValeurTropGrande(ligne_choisie)
+                break
+            except ValueError:
+                print('\nEntrée invalide! Vous devez entrez un chiffre\n')
+            except ErreurValeurTropGrande as e:
+                print(e, 'est invalide! La valeur doit être comprise entre 0 et 3. Recommencez\n')
+
+        while True:
+            try:
+                orientation_choisie = input('Quel est l\'orientation du coup que vous désirez jouer?\n').upper()
+                if orientation_choisie not in ['H', 'V']:  # cond.1 : vérifie si l'entrée est H ou V
+                    raise ErreurOrientation(orientation_choisie)
+                break
+            except ErreurOrientation as e:
+                print(e, 'n\'est pas une orientation invalide. Vous devez entrez H ou V. Recommencez')
+
+
+        return ligne_choisie, colonne_choisie, orientation_choisie
 
 
 class JoueurOrdinateur(Joueur):
@@ -114,4 +148,13 @@ class JoueurOrdinateur(Joueur):
 
         TODO: Vous devez compléter le corps de cette fonction.
         """
-        pass
+
+        # génère un coup au hasard
+        coups_possibles = planche.obtenir_coups_possibles()
+        random_coup = random.choice(coups_possibles)
+
+        random_ligne = random_coup[0]
+        random_colonne = random_coup[1]
+        random_orientation = random_coup[2]
+
+        return random_ligne, random_colonne, random_orientation
